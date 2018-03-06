@@ -21,4 +21,12 @@ colors <- colorRampPalette(c("white","red"))(100)
 ex=x[which(rownames(x) %in% c("WNT1","LRP5","GSK3B","CTNNB1","DNMT1","SNAI2","BIRC5","TP53","BCL2","SIRT1","CDKN1A","MYC","EPCAM","CDK4","CDK6")),]
 
 library(gplots)
-heatmap.2(ex,col=colors,scale="row", trace="none")
+library(factoextra)
+
+
+heatmap.2(ex,col=colors,scale="row", trace="none",distfun = function(x) get_dist(x,method="spearman") )
+
+          
+wnt=read.table("wnt_pathway_genes_gsea_kegg.txt")
+wnt=as.character(wnt$V1)
+heatmap.2(x[rownames(x) %in% wnt,],col=colors,scale="none")
